@@ -39,7 +39,7 @@ frame_baixo.grid(row=2, column =0, pady= 0, padx=10, sticky=NSEW)
 ##trabalhando no frame cima
 
 #Acessando a imagem
-#Acessando a imagem
+
 app_img = Image.open('Logo.png') 
 app_img = app_img.resize((45, 45))
 app_img = ImageTk.PhotoImage(app_img)
