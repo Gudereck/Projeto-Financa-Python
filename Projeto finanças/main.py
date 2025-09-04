@@ -42,6 +42,9 @@ frame_meio.grid(row=1, column =0, pady=1, padx=0, sticky=NSEW)
 frame_baixo = Frame(janela, width=1043, height=300, bg=co1, relief="flat")
 frame_baixo.grid(row=2, column =0, pady= 0, padx=10, sticky=NSEW)
 
+frame_gra_pie = Frame(frame_meio, width =580 , height= 250, bg=co2)
+frame_gra_pie.place(x=415, y=5)
+
 ##trabalhando no frame cima
 
 #Acessando a imagem
@@ -129,6 +132,64 @@ def grafico_bar():
     canva = FigureCanvasTkAgg(figura, frame_meio)
     canva.get_tk_widget().place(x=10, y=70) 
 
+#função de resumo total 
+def resumo():
+    renda = 500
+    despesas = 1600
+    saldo = renda - despesas
+
+    # --- Total Renda ---
+    Label(frame_meio, text="TOTAL RENDA MENSAL",
+          anchor=NW, font=('Verdana', 12), bg=co1, fg='#2e7d32').place(x=309, y=35)
+
+    Label(frame_meio, text=f"R${renda:,.2f}",
+          anchor=NW, font=('Arial', 17), bg=co1, fg='#545454').place(x=309, y=60)
+
+    ttk.Separator(frame_meio, orient="horizontal").place(x=309, y=95, width=200)
+
+    # --- Total Despesas ---
+    Label(frame_meio, text="TOTAL DESPESAS MENSAIS",
+          anchor=NW, font=('Verdana', 12), bg=co1, fg='#c62828').place(x=309, y=115)
+
+    Label(frame_meio, text=f"R${despesas:,.2f}",
+          anchor=NW, font=('Arial', 17), bg=co1, fg='#545454').place(x=309, y=140)
+
+    ttk.Separator(frame_meio, orient="horizontal").place(x=309, y=175, width=200)
+
+    # --- Saldo ---
+    Label(frame_meio, text="SALDO MENSAL",
+          anchor=NW, font=('Verdana', 12), bg=co1, fg='#0277bd').place(x=309, y=195)
+
+    Label(frame_meio, text=f"R${saldo:,.2f}",
+          anchor=NW, font=('Arial', 17), bg=co1, fg='#545454').place(x=309, y=220)
+
+    ttk.Separator(frame_meio, orient="horizontal").place(x=309, y=255, width=200)
+
+#função para grafico pizza
+
+
+def grafico_pie():
+   # faça figura e atribua objetos de eixo
+    figura = plt.Figure(figsize=(5, 3), dpi=90)
+    ax = figura.add_subplot(111)
+
+    lista_valores = [345,225,534]
+    lista_categorias = ['Renda', 'Despesa', 'Saldo']
+
+   #only "explode" the 2nd slice (i.e. 'Hogs')
+
+    explode = []
+    for i in lista_categorias:
+        explode.append(0.05)
+
+    ax.pie(lista_valores, explode=explode, wedgeprops=dict(width=0.2), autopct='%1.1f%%', colors=colors,shadow=True, startangle=90)
+    ax.legend(lista_categorias, loc="center right", bbox_to_anchor=(1.55, 0.50))
+
+    canva_categoria = FigureCanvasTkAgg(figura, frame_gra_pie)
+    canva_categoria.get_tk_widget().grid(row=0, column=0)
+
+grafico_pie()
+resumo()
 grafico_bar()
 porcentagem(65) # Chame a função com o valor desejado
 janela.mainloop()
